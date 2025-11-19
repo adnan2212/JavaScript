@@ -149,3 +149,116 @@ const parsedQueryString = {
 // console.log(result); 
 
 // -------------------------- Example Ends Here --------------------------
+
+/**
+ * Encode String
+ * input: aaabbbccd
+ * output: a3b3c2d1
+*/
+
+const encodeString = (str) => {
+
+  let map = new Map();
+
+  for (let i = 0; i < str.length; i++) {
+
+    map.set(str[i], (map.get(str[i]) || 0) + 1);
+
+  }
+
+  let result = '';
+
+  for (let [char, count] of map) {
+    result+=char + count;
+  }
+
+  return result;
+
+}
+
+// console.log(encodeString('aaabbbccd'));
+
+// -------------------------- Example Ends Here --------------------------
+
+const decodeString = (str) => {
+
+  let result = '';
+
+  for (let i = 0; i < str.length; i+=2) {
+    let j = str[i + 1];
+    while(j > 0) {
+      result+=str[i];
+      j--;
+    }
+  }
+
+  return result;
+}
+
+// console.log(decodeString('a3b3c2d1'));
+
+// -------------------------- Example Ends Here --------------------------
+
+const decodeStringMultiDigit = (arr) => {
+
+  let map = new Map();
+  
+  for (let i = 0; i < arr.length; i++) {
+
+    if (!isNaN(arr[i + 1]) && !isNaN(arr[i + 2])) {
+      let sum = (Number(arr[i + 1]) * 10) + Number(arr[i + 2]);
+      map.set(arr[i], sum);
+      i+=2;
+    } else if(!isNaN(arr[i+1]) && isNaN(arr[i+2])){
+      map.set(arr[i], Number(arr[i+1]));
+    }
+
+  }
+
+  let result = '';
+  for (let [key, value] of map) {
+    let j = value;
+    while (j > 0) {
+      result+=key;
+      j--;
+    }
+  }
+
+  return result;
+}
+
+// console.log(decodeStringMultiDigit('a2b12c3d11'));
+
+// -------------------------- Method-2 --------------------------
+
+const decodeStringMultiDigit2 = (str) => {
+
+  let result = '';
+  let i = 0;
+
+  while (i < str.length) {
+
+    let char = str[i];
+
+    i++;
+
+    let numStr = '';
+    while (i < str.length && !isNaN(str[i])) {
+
+      numStr+=str[i];
+      i++;
+    }
+
+    let count = Number(numStr);
+    while (count > 0) {
+      result+=char;
+      count--;
+    }
+  }
+
+  return result;
+}
+
+// console.log(decodeStringMultiDigit2('a2b12c3d11e1'));
+
+// -------------------------- Example Ends Here --------------------------
